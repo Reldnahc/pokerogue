@@ -344,9 +344,11 @@ class DelayedAttackTag extends ArenaTag {
 
   lapse(arena: Arena): boolean {
     const ret = super.lapse(arena);
+    const pokemon = arena.scene.getPokemonById(this.sourceId);
+    const user = pokemon.getBattlerIndex() !== BattlerIndex.ATTACKER  ? pokemon.getBattlerIndex() : pokemon.isPlayer() ? BattlerIndex.PLAYER : BattlerIndex.ENEMY;
 
     if (!ret)
-      arena.scene.unshiftPhase(new MoveEffectPhase(arena.scene, this.sourceId, [ this.targetIndex ], new PokemonMove(this.sourceMove, 0, 0, true)));
+      arena.scene.unshiftPhase(new MoveEffectPhase(arena.scene, user, [ this.targetIndex ], new PokemonMove(this.sourceMove, 0, 0, true)));
 
     return ret;
   }
