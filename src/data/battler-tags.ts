@@ -544,22 +544,38 @@ export class DrowsyTag extends BattlerTag {
   }
 }
 
+/**
+ * Represents a BattlerTag that causes the affected Pokemon to be taunted.
+ */
 export class TauntedTag extends BattlerTag {
 
+  /**
+   * Creates an instance of TauntedTag.
+   * @param sourceId The ID of the source of the tag.
+   * @param turnCount The number of turns the tag lasts.
+   */
   constructor(sourceId: integer, turnCount: integer) {
     super(BattlerTagType.TAUNTED, BattlerTagLapseType.PRE_MOVE, turnCount, Moves.TAUNT, sourceId);
   }
 
+  /**
+   * Executes when the tag is added to a Pokemon.
+   * @param pokemon The Pokemon to which the tag is added.
+   */
   onAdd(pokemon: Pokemon): void {
     super.onAdd(pokemon);
 
     pokemon.scene.queueMessage(getPokemonMessage(pokemon, ' fell for\nthe taunt!'));
   }
 
+  /**
+   * Executes when the tag is removed from a Pokemon.
+   * @param pokemon The Pokemon from which the tag is removed.
+   */
   onRemove(pokemon: Pokemon): void {
     super.onAdd(pokemon);
 
-    pokemon.scene.queueMessage(getPokemonMessage(pokemon, ' shook off\nthe taunt!'),null, null, null, true);
+    pokemon.scene.queueMessage(getPokemonMessage(pokemon, ' shook off\nthe taunt!'), null, null, null, true);
   }
 }
 
